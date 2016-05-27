@@ -50,7 +50,8 @@ try {
     $dbh->beginTransaction();
     //此处加上行锁,可以对bookNum做一些判断,bookNum>1,才做下一步更新操作
     $sql1 = 'SELECT bookNum FROM book WHERE bookId = ? FOR UPDATE';
-    //加上行锁后,如果user1在买书,并且user1的买书过程没有结束,user2就不能执行SELECT查询书籍数量的操作,这样就保证了不会出现只有1本书,却两个人同时买的状况
+    //加上行锁后,如果user1在买书,并且user1的买书过程没有结束,
+    //user2就不能执行SELECT查询书籍数量的操作,这样就保证了不会出现只有1本书,却两个人同时买的状况
     $sql2 = 'UPDATE book SET bookNum=bookNum-1 WHERE bookId = ?';
     $stmt1 = $dbh->prepare($sql1);
     $stmt2 = $dbh->prepare($sql2);
