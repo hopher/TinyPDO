@@ -1,5 +1,5 @@
 
-### How to use Pdo
+### PHP PDO的简单使用(query(),exec(),prepare(),Transaction,行锁)
 
 ```
 #数据库连接
