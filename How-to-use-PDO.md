@@ -66,4 +66,14 @@ try {
     die('Transaction Error Message: ' . $e->getMessage());
 }
 
+
+// 逐行获取
+$sth = $dbh->prepare("SELECT uid FROM pre_common_member");
+$sth->execute();
+
+while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+    // todo ....
+}
+
+
 ```
