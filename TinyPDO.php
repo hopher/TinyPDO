@@ -58,4 +58,31 @@ class TinyPDO
         return call_user_func_array(array($this->dbh, $functionName), $args);
     }
 
+    public function getOne($sql, $args = array())
+    {
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute($args);
+        $sth->setFetchMode(PDO::FETCH_NUM);
+        $rs = $sth->fetch();
+        return $rs[0];
+    }
+    
+    public function getRow($sql, $args = array())
+    {
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute($args);
+        $sth->setFetchMode(PDO::FETCH_ASSOC);
+        $rs = $sth->fetch();
+        return $rs;        
+    }
+    
+    public function getAll($sql, $args = array())
+    {
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute($args);
+        $sth->setFetchMode(PDO::FETCH_ASSOC);
+        $rs = $sth->fetchAll();
+        return $rs;
+    }
+
 }
