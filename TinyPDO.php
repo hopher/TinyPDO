@@ -47,6 +47,40 @@ class TinyPDO
         return $sth->execute($fieldsValues);
     }
 
+    /**
+     * 批量插入
+     * @param array $fields 属性名
+     * @param array $multiValues 值
+     */
+    public function batchInsert($table, $fields, $multiValues)
+    {
+        $fieldsStr = implode(",", $fields);
+        $fieldsPlaceholder = implode(',', array_fill(0, count($fields), '?'));
+
+        $sql = "INSERT INTO $table (" . $fieldsStr . ") VALUES (" . $fieldsPlaceholder . ")";
+
+        $sth = $this->dbh->prepare($sql);
+
+        try {
+            $this->beginTransaction();
+
+            foreach ($multiValues as $values) {
+                // 失败时，返回false
+                $sthExecute = $sth->execute($values);
+                if ($sthExecute == false) {
+                    throw new Exception('batchInsert fail');
+                }
+            }
+
+            $this->commit();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            $this->rollBack();
+        }
+
+        return $this;
+    }
+
     public function __destruct()
     {
         // 释放连接
@@ -66,16 +100,16 @@ class TinyPDO
         $rs = $sth->fetch();
         return $rs[0];
     }
-    
+
     public function getRow($sql, $args = array())
     {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($args);
         $sth->setFetchMode(PDO::FETCH_ASSOC);
         $rs = $sth->fetch();
-        return $rs;        
+        return $rs;
     }
-    
+
     public function getAll($sql, $args = array())
     {
         $sth = $this->dbh->prepare($sql);
