@@ -47,104 +47,15 @@ class TinyPDO
         return $sth->execute($fieldsValues);
     }
 
-    /**
-     * 批量插入
-     * @param array $fields 属性名
-     * @param array $multiValues 值
-     */
-    public function batchInsert($table, $fields, $multiValues)
-    {
-        $fieldsStr = implode(",", $fields);
-        $fieldsPlaceholder = implode(',', array_fill(0, count($fields), '?'));
-
-        $sql = "INSERT INTO $table (" . $fieldsStr . ") VALUES (" . $fieldsPlaceholder . ")";
-
-        $sth = $this->dbh->prepare($sql);
-
-        try {
-            $this->beginTransaction();
-            foreach ($multiValues as $values) {
-                // 失败时，返回false
-                $sthExecute = $sth->execute($values);
-                if ($sthExecute == false) {
-                    throw new Exception('batchInsert fail');
-                }
-            }
-
-            $this->commit();
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            $this->rollBack();
-        }
-
-        return $this;
-    }
-
-    public function lastInsertId()
-    {
-        return $this->pdo->lastInsertId();
-    }
-
-    /**
-     * beginTransaction 事务开始
-     */
-    public function beginTransaction()
-    {
-        $this->dbh->beginTransaction();
-    }
-
-    /**
-     * commit 事务提交
-     */
-    public function commit()
-    {
-        $this->dbh->commit();
-    }
-
-    /**
-     * rollback 事务回滚
-     */
-    public function rollback()
-    {
-        $this->dbh->rollback();
-    }
-
-    /**
-     * fetch
-     */
-    public function fetch($table, $fields = '*')
-    {
-        // 非数组转换
-        if (is_array($fields)) {
-            $fields = implode(',', $fields);
-        }
-
-        $sth = $this->dbh->prepare("SELECT $fields FROM $table");
-        $sth->execute();
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    /**
-     * fetchAll
-     */
-    public function fetchAll($table, $fields = '*')
-    {
-        // 非数组转换
-        if (is_array($fields)) {
-            $fields = implode(',', $fields);
-        }
-
-        $sth = $this->dbh->prepare("SELECT $fields FROM $table");
-        $sth->execute();
-        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
     public function __destruct()
     {
         // 释放连接
         unset($this->dbh);
+    }
+
+    public function __call($functionName, $args)
+    {
+        return call_user_func_array(array($this->dbh, $functionName), $args);
     }
 
 }
