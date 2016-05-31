@@ -18,7 +18,7 @@ class TinyPDO
             $this->dbh = new PDO($this->dsn, $dbUser, $dbPasswd);
             // 禁用php模拟预处理
             $this->dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $this->dbh->exec("set names utf8");
+            $this->dbh->exec("set names $dbCharset");
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());
         }
