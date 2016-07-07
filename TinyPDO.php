@@ -50,9 +50,9 @@ class TinyPDO
     /**
      * 批量插入
      * @param array $fields 属性名
-     * @param array $multiValues 值
+     * @param array $multiData 值
      */
-    public function batchInsert($table, $fields, $multiValues)
+    public function batchInsert($table, $fields, $multiData)
     {
         $fieldsStr = implode(",", $fields);
         $fieldsPlaceholder = implode(',', array_fill(0, count($fields), '?'));
@@ -66,7 +66,7 @@ class TinyPDO
 
             foreach ($multiValues as $values) {
                 // 失败时，返回false
-                $sthExecute = $sth->execute($values);
+                $sthExecute = $sth->execute(array_values($values));
                 if ($sthExecute == false) {
                     throw new Exception('batchInsert fail');
                 }

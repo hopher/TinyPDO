@@ -1,3 +1,23 @@
+# TinyPdo 使用
+
+```
+// 数据库连接
+$dbHost = 'localhost';
+$dbName = 'test';
+$dbUser = 'root';
+$dbPasswd = 'secure';
+
+$db = TinyPDO::getInstance($dbHost, $dbUser, $dbPasswd, $dbName);
+$multiData = $db->getAll("SELECT user_id, username, created_at, updated_at FROM users");
+
+$fields = array(
+    'user_id', 'username', 'created_at', 'updated_at'
+);
+
+$db->batchInsert('users_log', $fields, $multiData);
+
+```
+
 
 ### PHP PDO的简单使用(query(),exec(),prepare(),Transaction,行锁)
 
