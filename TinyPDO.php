@@ -47,6 +47,31 @@ class TinyPDO
         return $sth->execute($fieldsValues);
     }
 
+    public function update($table, $data, $where) {
+
+        $dataFields = array();
+        foreach ($data as $field => $value) {
+            $dataFields[] = $field. '=?';
+        }
+
+        $whereFields = array();
+        foreach ($where as $field => $value) {
+            $whereFields[] = $field. '=?';
+        }
+
+        $dataFieldsStr = implode(", ", $dataFields);
+        $whereFieldsStr = implode(", AND ", $whereFields);
+
+        $dataValues = array_values($data);
+        $whereValues = array_values($where);
+
+        $values = array_merge($dataValues, $whereValues);
+        $sql = "UPDATE $table SET $dataFieldsStr WHERE $whereFieldsStr";
+
+        $sth = $this->dbh->prepare($sql);
+        return $sth->execute($values);
+    }
+
     /**
      * 批量插入
      * @param array $fields 属性名
