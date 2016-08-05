@@ -1,7 +1,8 @@
 <?php
 
 /**
- * 简单PDO操作类
+ * Tiny php pdo db handle class.
+ * 
  * @author hongjh <565983236@qq.com>
  */
 class TinyPDO

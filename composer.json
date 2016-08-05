@@ -1,18 +1,18 @@
 {
-	"name": "hongjh/tiny-pdo",
-	"description": "简易 pdo 操作类",
-  "license": "MIT",
-  "authors": [
-      {
-          "name": "hongjh",
-          "email": "565983236@qq.com"
-      }
-  ],
-	"require": {
-		"php": ">=5.6.0"
-	},
-	
-	"autoload": {
-		"psr-4": {"Hongjh\\TinyPdo\\": ""}
-	}
+    "name": "hongjh/tiny-pdo",
+    "description": "Tiny php pdo db handle class.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hongjh",
+            "email": "565983236@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0"
+    },
+
+    "autoload": {
+        "files": ["TinyPDO.php"]
+    }
 }

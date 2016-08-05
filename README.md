@@ -1,7 +1,31 @@
-# TinyPdo 使用
+# TinyPdo
+
+Tiny php pdo db handle class.
+
+# Install
+You can install this package either with `composer`.
+
+## composer
 
 ```
-// 数据库连接
+composer require hongjh/tiny-pdo=dev-master
+```
+
+or 
+
+add flow to composer.json
+
+```
+"require": {
+    "hongjh/tiny-pdo": "dev-master"
+}
+```
+
+# How to use
+
+
+```
+// you db connect
 $dbHost = 'localhost';
 $dbName = 'test';
 $dbUser = 'root';
@@ -19,10 +43,11 @@ $db->batchInsert('users_log', $fields, $multiData);
 ```
 
 
-### PHP PDO的简单使用(query(),exec(),prepare(),Transaction,行锁)
+## PHP PDO use - query(), exec(), prepare(), Transaction, line lock
+
 
 ```
-#数据库连接
+// you db connect
 $dbtype = 'mysql';
 $host = 'localhost';
 $db = 'your db';
@@ -95,5 +120,8 @@ while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
     // todo ....
 }
 
-
 ```
+
+# License
+
+The MIT License
