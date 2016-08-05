@@ -1,6 +1,7 @@
 {
     "name": "hongjh/tiny-pdo",
     "description": "Tiny php pdo db handle class.",
+    "keywords": ["php", "pdo"],
     "license": "MIT",
     "authors": [
         {
@@ -11,8 +12,8 @@
     "require": {
         "php": ">=5.6.0"
     },
-
     "autoload": {
         "files": ["TinyPDO.php"]
-    }
+    },
+    "minimum-stability": "dev"
 }
