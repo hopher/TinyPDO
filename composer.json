@@ -14,6 +14,5 @@
     },
     "autoload": {
         "files": ["TinyPDO.php"]
-    },
-    "minimum-stability": "stable"
+    }
 }
